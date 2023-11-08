@@ -24,6 +24,8 @@ router.get('/phieukiem', (req, res) => {
 	})
 });
 
+
+// NOTE: sửa
 router.post('/phieukiem', (req, res) => {
 
 	const { MAPK,NVLAP,NGLAP,TRANGTHAI } = req.body;
@@ -69,6 +71,7 @@ router.delete('/phieukiem', (req, res) => {
 	});
 });
 
+// NOTE: sửa
 router.patch('/phieukiem', (req, res) => {
 	const {
 		MAPK,
