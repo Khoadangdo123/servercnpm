@@ -28,23 +28,23 @@ const updatedSanPham = "update SANPHAM "
 		+ "where MASP = ?;";
 const deleteSanPham = "delete from SANPHAM where MASP = ?";
 
-// NOTE: QL Phiếu kiểm phải fix lại
+// NOTE: QL Phiếu kiểm phải fix lại => FIX XONG
 const tablePK = "select * from PHIEUKIEM";
 const setForeignPK_0 = "SET FOREIGN_KEY_CHECKS = 0;";
-const insertPK = "insert into PHIEUKIEM(MAPK,NVLAP,NGLAP,TRANGTHAI) VALUES (?, ?, ?, ?);";
+const insertPK = "insert into PHIEUKIEM(MAPK,NVLAP,MASP,DONGIA,SLGIAO,NGLAP,TRANGTHAI) VALUES (?, ?, ?, ?, ?, ?, ?);";
 const setForeignPK_1 = "SET FOREIGN_KEY_CHECKS = 1;";
-const updatedPK = "update PHIEUKIEM set NVLAP = ?, NGLAP = ?, TRANGTHAI = ? where MAPK = ?;";
+const updatedPK = "update PHIEUKIEM set NVLAP = ?, MASP = ?, DONGIA = ?, SLGIAO = ?, NGLAP = ?, TRANGTHAI = ? where MAPK = ?;";
 const deletePK = "delete from PHIEUKIEM where MAPK = ?;";
 
-// NOTE: QL Hóa đơn nhập phải fix lại
+// NOTE: QL Hóa đơn nhập phải fix lại => FIX XONG
 const tableHDNhap = "select * from HDNHAP";
 const setForeignHDNhap_0 = "SET FOREIGN_KEY_CHECKS = 0;";
 const setForeignHDNhap_1 = "SET FOREIGN_KEY_CHECKS = 1;";
-const insertHDNhap = "INSERT INTO HDNHAP(MAHD,NVXUAT,NGNHAP,TONG) VALUES (?, ?, ?, ?);";
-const updateHDNhap = "update HDNHAP set NVXUAT = ?, NGNHAP = ?, TONG = ? where MAHD = ?;";
+const insertHDNhap = "INSERT INTO HDNHAP(MAHD,NVXUAT,MASP,DONGIA,SOLUONG,NGAYNHAP,TONG) VALUES (?, ?, ?, ?, ?, ?, ?);";
+const updateHDNhap = "update HDNHAP set NVXUAT = ?, MASP = ?, DONGIA = ?, SOLUONG = ?, NGNHAP = ?, TONG = ? where MAHD = ?;";
 const deleteHDNhap = "delete from HDNHAP where MAHD = ?;";
 
-// NOTE: QL Nhà cung cấp phải fix lại
+// NOTE: QL Nhà cung cấp phải fix lại => ko co gi de fix => FIX XONG
 const tableNCC = "select * from NHACUNGCAP;";
 const setForeignNCC_0 = "SET FOREIGN_KEY_CHECKS = 0;";
 const setForeignNCC_1 = "SET FOREIGN_KEY_CHECKS = 1;";
@@ -52,13 +52,13 @@ const insertNCC = "INSERT INTO NHACUNGCAP (MANCC,TENNCC,DIACHI) VALUES (?, ?, ?)
 const deleteNCC = "delete from NHACUNGCAP where MANCC = ?;";
 const updateNCC = "update NHACUNGCAP set TENNCC = ?, DIACHI = ? where MANCC = ?;"
 
-// NOTE: QL Hóa Đơn phải fix lại
+// NOTE: QL Hóa Đơn phải fix lại => FIX XONG
 const tableHD = "select * from HOADON;";
 const setForeignHD_0 = "SET FOREIGN_KEY_CHECKS = 0;";
 const setForeignHD_1 = "SET FOREIGN_KEY_CHECKS = 1;";
-const insertHD = "INSERT INTO HOADON(MAHD,MAKH,NVXUAT,NGAYXUAT,TONGTIEN,TRANGTHAI) VALUES (?, ?, ?, ?, ?, ?)"
+const insertHD = "INSERT INTO HOADON(MAHD,MAKH,NVXUAT,MASP,DONGIA,SOLUONG,NGAYXUAT,TONGTIEN,TRANGTHAI) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
 const deleteHD = "delete from HOADON where MAHD = ?";
-const updateHD = "update HOADON set MAKH = ?, NVXUAT = ?, NGAYXUAT = ?, TONGTIEN = ?, TRANGTHAI = ? where MAHD = ?;"
+const updateHD = "update HOADON set MAKH = ?, NVXUAT = ?, MASP = ?, DONGIA = ?, SOLUONG = ?, NGAYXUAT = ?, TONGTIEN = ?, TRANGTHAI = ? where MAHD = ?;"
 
 // NOTE: Lấy thông tin khách hàng
 const tableKH = "select * from KHACHHANG";

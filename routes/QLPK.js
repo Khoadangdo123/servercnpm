@@ -25,13 +25,16 @@ router.get('/phieukiem', (req, res) => {
 });
 
 
-// NOTE: sửa
+// NOTE: sửa => FIX XONG
 router.post('/phieukiem', (req, res) => {
 
-	const { MAPK,NVLAP,NGLAP,TRANGTHAI } = req.body;
+	const { MAPK,NVLAP,MASP,DONGIA,SLGIAO,NGLAP,TRANGTHAI } = req.body;
 	const newData = [
 		MAPK,
 		NVLAP,
+		MASP,
+		DONGIA,
+		SLGIAO,
 		NGLAP,
 		TRANGTHAI
 	];
@@ -71,17 +74,23 @@ router.delete('/phieukiem', (req, res) => {
 	});
 });
 
-// NOTE: sửa
+// NOTE: sửa => FIX XONG
 router.patch('/phieukiem', (req, res) => {
 	const {
 		MAPK,
 		NVLAP,
+		MASP,
+		DONGIA,
+		SLGIAO,
 		NGLAP,
 		TRANGTHAI
 	} = req.body;
 
 	const updatedData = [
 		NVLAP,
+		MASP,
+		DONGIA,
+		SLGIAO,
 		NGLAP,
 		TRANGTHAI,
 		MAPK

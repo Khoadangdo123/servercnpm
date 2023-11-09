@@ -26,11 +26,14 @@ router.get('/hoadon', (req, res) => {
 
 router.post('/hoadon', (req, res) => {
 
-	const { MAHD,MAKH,NVXUAT,NGAYXUAT,TONGTIEN,TRANGTHAI } = req.body;
+	const { MAHD,MAKH,NVXUAT,MASP,DONGIA,SOLUONG,NGAYXUAT,TONGTIEN,TRANGTHAI } = req.body;
 	const newData = [
 		MAHD,
 		MAKH,
 		NVXUAT,
+		MASP,
+		DONGIA,
+		SOLUONG,
 		NGAYXUAT,
 		TONGTIEN,
 		TRANGTHAI
@@ -78,6 +81,9 @@ router.patch('/hoadon', (req, res) => {
 		MAHD,
 		MAKH,
 		NVXUAT,
+		MASP,
+		DONGIA,
+		SOLUONG,
 		NGAYXUAT,
 		TONGTIEN,
 		TRANGTHAI
@@ -86,6 +92,9 @@ router.patch('/hoadon', (req, res) => {
 	const updatedData = [
 		MAKH,
 		NVXUAT,
+		MASP,
+		DONGIA,
+		SOLUONG,
 		NGAYXUAT,
 		TONGTIEN,
 		TRANGTHAI,

@@ -25,10 +25,13 @@ router.get('/hoadonnhap', (req, res) => {
 
 router.post('/hoadonnhap', (req, res) => {
 
-	const { MAHD,NVXUAT,NGNHAP,TONG } = req.body;
+	const { MAHD,NVXUAT,MASP,DONGIA,SOLUONG,NGNHAP,TONG } = req.body;
 	const newData = [
 		MAHD,
 		NVXUAT,
+		MASP,
+		DONGIA,
+		SOLUONG,
 		NGNHAP,
 		TONG,
 	];
@@ -72,6 +75,9 @@ router.patch('/hoadonnhap', (req, res) => {
 	const {
 		MAHD,
 		NVXUAT,
+		MASP,
+		DONGIA,
+		SOLUONG,
 		NGNHAP,
 		TONG
 	} = req.body;
@@ -79,6 +85,9 @@ router.patch('/hoadonnhap', (req, res) => {
 	const updatedData = [
 		NVXUAT,
 		NGNHAP,
+		MASP,
+		DONGIA,
+		SOLUONG,
 		TONG,
 		MAHD,
 	];
