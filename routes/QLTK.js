@@ -45,7 +45,8 @@ router.post('/nhanvien', (req, res) => {
 
 		res.status(200).json({
 			message: 'Thêm data cơ sở dữ liệu',
-			data: results
+			data: results,
+			status: 'success'
 		})
 	});
 });
@@ -61,7 +62,8 @@ router.delete('/nhanvien', (req, res) => {
 
 		res.json({
 			message: 'Xóa dữ liệu thành công',
-			data: results
+			data: results,
+			status: 'delete success'
 		});
 	});
 });
@@ -101,7 +103,8 @@ router.patch('/nhanvien', (req, res) => {
 
 		res.json({
 			message: 'Cập nhật dữ liệu thành công',
-			data: updatedData
+			data: updatedData,
+			status: 'success'
 		});
 	});
 })

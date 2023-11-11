@@ -15,8 +15,9 @@ const updateDD = "update DATHANG set NVDAT = ?, NGDAT = ? where MADD = ?;"
 
 // QL Nhân viên
 const tableNhanVien = 'select * from NHANVIEN';
-const insertNhanVien = 'INSERT INTO NHANVIEN (MANV,TENNV,DIACHI,NGAYSINH,GIOITINH,TRANGTHAI,SDT,TKHOAN,MKHAU,CHUCVU) VALUES (MANV,TENNV,DIACHI,NGAYSINH,GIOITINH,TRANGTHAI,SDT,TKHOAN,MKHAU,CHUCVU);'
+const insertNhanVien = 'INSERT INTO NHANVIEN (MANV,TENNV,DIACHI,NGAYSINH,GIOITINH,TRANGTHAI,SDT,TKHOAN,MKHAU,CHUCVU) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
 const updatedNhanVien = "update NHANVIEN set TENNV = ?, DIACHI = ?, NGAYSINH = ?, GIOITINH = ?, TRANGTHAI = ?, SDT = ?, TKHOAN = ?, MKHAU = ?, CHUCVU = ? where MANV = ?;"
+const updatedNhanVien1 = "update NHANVIEN set TENNV = ?, DIACHI = ?, NGAYSINH = ?, GIOITINH = ?, TRANGTHAI = ?, SDT = ?, TKHOAN = ?, MKHAU = ?, CHUCVU = ? where MANV = ?;"
 const deleteNhanVien = "delete from NHANVIEN where MANV = ?;"
 
 // QL Sản Phẩm
