@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const {
-	tableSanPham,
-	insertSanPham,
-	updatedSanPham,
-	deleteSanPham
+	tableTonKho,
+	insertTonKho,
+	updateTonKho,
+	deleteTonKho,
+	setForeignTonKho_0,
+	setForeignTonKho_1
 } = require('./QuerySQL.js');
 const db = require('../Database.js');
 
-router.get('/sanpham', (req, res) => {
-	db.query(tableSanPham, (err, results, fields) => {
+router.get('/tonkho', (req, res) => {
+	db.query(tableTonKho, (err, results, fields) => {
 		if (err) {
 			res.status(400).json('Error executing query:', err);
 			return;
@@ -21,20 +23,28 @@ router.get('/sanpham', (req, res) => {
 	})
 });
 
-router.post('/sanpham', (req, res) => {
+router.post('/tonkho', (req, res) => {
 
-	const { MASP, TENSP, MANCC, LOAI, SOLUONG, DONGIA, HSD } = req.body;
+	const {
+		MASP,
+    MANCC,
+    TenSPTK,
+    Loai,
+    SLTon,
+    DONGIA,
+    HSD
+	} = req.body;
 	const newData = [
-		MASP, 
-		TENSP, 
-		MANCC, 
-		LOAI, 
-		SOLUONG, 
-		DONGIA, 
-		HSD
+		MASP,
+    MANCC,
+    TenSPTK,
+    Loai,
+    SLTon,
+    DONGIA,
+    HSD
 	];
 
-	db.query(insertSanPham, newData, (err, results) => {
+	db.query(insertTonKho, newData, (err, results) => {
 		if (err) {
 			res.status(400).json(err.message);
 			return;
@@ -48,10 +58,11 @@ router.post('/sanpham', (req, res) => {
 	});
 });
 
-router.delete('/sanpham', (req, res) => {
+router.delete('/tonkho', (req, res) => {
 	const { MASP } = req.body;
 
-	db.query(deleteSanPham, [ MASP ], (err, results) => {
+
+	db.query(deleteTonKho, [ MASP ], (err, results) => {
 		if (err) {
 			res.status(400).json(err.message);
 			return;
@@ -65,28 +76,28 @@ router.delete('/sanpham', (req, res) => {
 	});
 });
 
-router.patch('/sanpham', (req, res) => {
+router.patch('/tonkho', (req, res) => {
 	const {
 		MASP,
-		TENSP,
-		MANCC,
-		LOAI,
-		SOLUONG,
-		DONGIA,
-		HSD
+    MANCC,
+    TenSPTK,
+    Loai,
+    SLTon,
+    DONGIA,
+    HSD
 	} = req.body;
 
 	const updatedData = [
-		TENSP,
 		MANCC,
-		LOAI,
-		SOLUONG,
-		DONGIA,
-		HSD,
+    TenSPTK,
+    Loai,
+    SLTon,
+    DONGIA,
+    HSD,
 		MASP,
 	];
 
-	db.query(updatedSanPham, updatedData, (err, results) => {
+	db.query(updateTonKho, updatedData, (err, results) => {
 		if (err) {
 			res.status(400).json(err.message);
 			return;

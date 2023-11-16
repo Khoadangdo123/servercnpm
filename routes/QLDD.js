@@ -25,11 +25,11 @@ router.get('/dondat', (req, res) => {
 
 router.post('/dondat', (req, res) => {
 
-	const { MADD, NVDAT, NGDAT } = req.body;
+	const { MADD, NVDAT, NGAYDAT } = req.body;
 	const newData = [
 		MADD,
 		NVDAT,
-		NGDAT
+		NGAYDAT
 	];
 
 	db.query(setForeignDD_0, (err, results) => {
@@ -68,11 +68,11 @@ router.delete('/dondat', (req, res) => {
 router.patch('/dondat', (req, res) => {
 	const { 
 		NVDAT,
-		NGDAT,
+		NGAYDAT,
 		MADD
 	} = req.body;
 
-	db.query(updateDD, [ NVDAT, NGDAT, MADD ], (err, results) => {
+	db.query(updateDD, [ NVDAT, NGAYDAT, MADD ], (err, results) => {
 		if (err) {
 			res.status(400).json(err.message);
 			return;
@@ -80,7 +80,8 @@ router.patch('/dondat', (req, res) => {
 
 		res.json({
 			message: 'Cập nhật dữ liệu thành công',
-			data: results
+			data: results,
+			status: 'success'
 		});
 	});
 })

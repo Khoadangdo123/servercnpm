@@ -26,13 +26,12 @@ router.get('/hoadon', (req, res) => {
 
 router.post('/hoadon', (req, res) => {
 
-	const { MAHD,MAKH,NVXUAT,NGAYXUAT,TONGTIEN,TRANGTHAI } = req.body;
+	const { MAHD,MAKH,NVXUAT,NGAYXUAT,TRANGTHAI } = req.body;
 	const newData = [
 		MAHD,
 		MAKH,
 		NVXUAT,
 		NGAYXUAT,
-		TONGTIEN,
 		TRANGTHAI
 	];
 
@@ -67,7 +66,8 @@ router.delete('/hoadon', (req, res) => {
 	
 			res.json({
 				message: 'Xóa dữ liệu thành công',
-				data: results
+				data: results,
+				status: 'success'
 			});
 		});
 	});
@@ -79,7 +79,6 @@ router.patch('/hoadon', (req, res) => {
 		MAKH,
 		NVXUAT,
 		NGAYXUAT,
-		TONGTIEN,
 		TRANGTHAI
 	} = req.body;
 
@@ -87,9 +86,8 @@ router.patch('/hoadon', (req, res) => {
 		MAKH,
 		NVXUAT,
 		NGAYXUAT,
-		TONGTIEN,
 		TRANGTHAI,
-		MAHD,
+		MAHD
 	];
 
 	db.query(updateHD, updatedData, (err, results) => {
@@ -100,7 +98,8 @@ router.patch('/hoadon', (req, res) => {
 
 		res.json({
 			message: 'Cập nhật dữ liệu thành công',
-			data: results
+			data: results,
+			status: 'success'
 		});
 	});
 })

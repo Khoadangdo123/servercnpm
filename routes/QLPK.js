@@ -28,13 +28,34 @@ router.get('/phieukiem', (req, res) => {
 // NOTE: sửa
 router.post('/phieukiem', (req, res) => {
 
-	const { MAPK,NVLAP,NGLAP,TRANGTHAI } = req.body;
+	const { 
+		MAPK,
+		NVLAP,
+		MASP,
+		DONGIA,
+		SLGIAO,
+		NGLAP,
+		TRANGTHAI
+	} = req.body;
 	const newData = [
 		MAPK,
 		NVLAP,
+		MASP,
+		DONGIA,
+		SLGIAO,
 		NGLAP,
 		TRANGTHAI
 	];
+
+	console.log({ 
+		MAPK,
+		NVLAP,
+		MASP,
+		DONGIA,
+		SLGIAO,
+		NGLAP,
+		TRANGTHAI
+	})
 
 	db.query(setForeignPK_0, (err, results) => {
 		db.query(insertPK, newData, (err, results) => {

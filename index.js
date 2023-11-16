@@ -13,7 +13,10 @@ const qlsp = require("./routes/QLSP.js");
 const qlpk = require("./routes/QLPK.js");
 const qlhdnhap = require('./routes/QLHDNhap.js');
 const qlncc = require('./routes/QLNCC.js');
-const qlhd = require('./routes/QLHD.js')
+const qlhd = require('./routes/QLHD.js');
+const qlchiTiet = require('./routes/ChiTietHoaDon.js');
+const qlchiTietDH = require('./routes/ChiTietDatHang.js');
+const qltonkho = require('./routes/QLTonKho.js');
 app.use(cors())
 // app.use(bodyParser.json());
 // app.use(express.json());
@@ -28,9 +31,11 @@ app.use(
   qlpk,
   qlhdnhap,
   qlncc,
-  qlhd
+  qlhd,
+  qltonkho,
+  qlchiTiet,
+  qlchiTietDH
 );
-
 
 // Connect
 
