@@ -35,16 +35,41 @@ router.post('/sanpham', (req, res) => {
 	];
 
 	db.query(insertSanPham, newData, (err, results) => {
-		if (err) {
-			res.status(400).json(err.message);
-			return;
+
+		if (MASP === '' || TENSP === '' || MANCC === '' || LOAI === '' || SOLUONG === '' || DONGIA === '' || HSD === '') {
+			res.json({
+				error: 1,
+				message: 'Bạn cần nhập đầy đủ thông tin'
+			});
+		} else {
+			if (Number(SOLUONG) < 0) {
+				res.json({
+					error: 2,
+					message: 'Số lượng bạn cần nhập là số dương'
+				});
+			} else if (Number(DONGIA) < 0) {
+				res.json({
+					error: 3,
+					message: 'Số lượng đơn giá cần nhập là số dương'
+				})
+			} else {
+
+				if (err) {
+					res.status(400).json({
+						error: 'error',
+						message: err.message
+					});
+					return;
+				}
+
+				res.status(200).json({
+					message: 'Thêm data cơ sở dữ liệu',
+					data: results,
+					status: 'success'
+				});
+			}
 		}
 
-		res.status(200).json({
-			message: 'Thêm data cơ sở dữ liệu',
-			data: results,
-			status: 'success'
-		})
 	});
 });
 
@@ -87,16 +112,44 @@ router.patch('/sanpham', (req, res) => {
 	];
 
 	db.query(updatedSanPham, updatedData, (err, results) => {
-		if (err) {
-			res.status(400).json(err.message);
-			return;
+
+		if (TENSP === '' || MANCC === '' || LOAI === '' || SOLUONG === '' || DONGIA === '' || HSD === '') {
+			res.json({
+				error: 1,
+				message: 'Bạn cần nhập đầy đủ thông tin'
+			})
+		} else {
+			if (Number(SOLUONG) < 0) {
+				res.json({
+					error: 2,
+					message: 'Bạn cần nhập số lượng là số dương'
+				});
+				return;
+			} else if (Number(DONGIA) < 0) {
+				res.json({
+					error: 3,
+					message: 'Bạn cần nhập đơn giá là số dương'
+				});
+				return;
+			} else {
+				if (err) {
+					res.status(400).json({
+						error: 'error',
+						message: err.message
+					});
+					return;
+				}
+		
+				res.json({
+					message: 'Cập nhật dữ liệu thành công',
+					data: updatedData,
+					status: 'success'
+				});
+			}
+
+
 		}
 
-		res.json({
-			message: 'Cập nhật dữ liệu thành công',
-			data: updatedData,
-			status: 'success'
-		});
 	});
 })
 

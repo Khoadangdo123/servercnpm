@@ -20,6 +20,7 @@ const updatedNhanVien = "update NHANVIEN set TENNV = ?, DIACHI = ?, NGAYSINH = ?
 const updatedNhanVien1 = "update NHANVIEN set TENNV = ?, DIACHI = ?, NGAYSINH = ?, GIOITINH = ?, TRANGTHAI = ?, SDT = ?, TKHOAN = ?, MKHAU = ?, CHUCVU = ? where MANV = ?;"
 const deleteNhanVien = "delete from NHANVIEN where MANV = ?;"
 
+
 // QL Sản Phẩm
 const tableSanPham = "select * from SANPHAM";
 const insertSanPham = "INSERT INTO SANPHAM (MASP,TENSP,MANCC,LOAI,SOLUONG,DONGIA,HSD) VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -93,6 +94,7 @@ module.exports = {
 	selectTableNhanVien,
 	selectTableLogin,
 	selectTableThongNhanVien,
+
 	// Quản 
 	tableDataDD,
 	insertDataDD,
