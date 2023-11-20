@@ -37,21 +37,24 @@ router.post('/sanpham', (req, res) => {
 	db.query(insertSanPham, newData, (err, results) => {
 
 		if (MASP === '' || TENSP === '' || MANCC === '' || LOAI === '' || SOLUONG === '' || DONGIA === '' || HSD === '') {
-			res.json({
+			res.status(200).json({
 				error: 1,
 				message: 'Bạn cần nhập đầy đủ thông tin'
 			});
+			return;
 		} else {
 			if (Number(SOLUONG) < 0) {
 				res.json({
 					error: 2,
 					message: 'Số lượng bạn cần nhập là số dương'
 				});
+				return;
 			} else if (Number(DONGIA) < 0) {
 				res.json({
 					error: 3,
 					message: 'Số lượng đơn giá cần nhập là số dương'
-				})
+				});
+				return;
 			} else {
 
 				if (err) {
@@ -60,13 +63,15 @@ router.post('/sanpham', (req, res) => {
 						message: err.message
 					});
 					return;
+				} else {
+					res.status(200).json({
+						message: 'Thêm data cơ sở dữ liệu',
+						data: results,
+						status: 'success'
+					});
+					return;
 				}
 
-				res.status(200).json({
-					message: 'Thêm data cơ sở dữ liệu',
-					data: results,
-					status: 'success'
-				});
 			}
 		}
 

@@ -37,10 +37,11 @@ router.post('/hoadon', (req, res) => {
 
 	if (MAKH === '' || NVXUAT === '' || NGAYXUAT === '' || TRANGTHAI === '') {
 
-		res.json({
+		res.status(200).json({
 			message: 'Bạn cần nhập đầy đủ dữ liệu',
 			error: 1
-		})
+		});
+		return;
 
 	} else {
 		
@@ -48,16 +49,18 @@ router.post('/hoadon', (req, res) => {
 			db.query(insertHD, newData, (err, results) => {
 				if (err) {
 					res.status(400).json({
-						error: err.message,
-						// data: "oke"
+						message: err.message,
+						error: 2
 					});
 					return;
+				} else {
+					res.status(200).json({
+						message: 'Thêm data cơ sở dữ liệu',
+						data: results,
+						status: 'success'
+					});
 				}
 		
-				res.status(200).json({
-					message: 'Thêm data cơ sở dữ liệu',
-					data: results
-				})
 			});
 		})
 	}
@@ -102,22 +105,32 @@ router.patch('/hoadon', (req, res) => {
 
 
 	if (MAKH === '' || NVXUAT === '' || NGAYXUAT === '' || TRANGTHAI === '') {
-		res.json({
-			message: "Bạn cần nhập đầy đủ dữ liệu",
-			error: 1
-		})
+		res.json(
+			{
+				message: "Bạn cần nhập đầy đủ dữ liệu",
+				error: 1
+			}
+		);
+		return;
 	} else {
 		db.query(updateHD, updatedData, (err, results) => {
 			if (err) {
-				res.status(400).json(err.message);
+				res.status(400).json(
+					{
+						error: 2,
+						message: err.message
+					}
+				);
+				return;
+			} else {
+				res.json({
+					message: 'Cập nhật dữ liệu thành công',
+					data: results,
+					status: 'success'
+				});
 				return;
 			}
 	
-			res.json({
-				message: 'Cập nhật dữ liệu thành công',
-				data: results,
-				status: 'success'
-			});
 		});
 	}
 

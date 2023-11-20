@@ -31,22 +31,38 @@ router.post('/dondat', (req, res) => {
 		NVDAT,
 		NGAYDAT
 	];
-
-	db.query(setForeignDD_0, (err, results) => {
-		db.query(insertDataDD, newData, (err, results, fields) => {
-			if (err) {
-				res.status(400).json(err.message);
-				return;
+	if (MADD === '' || NVDAT === '' || NGAYDAT === '') {
+		res.json(
+			401,
+			{
+				error: 1,
+				message: 'Bạn cần nhập đầy đủ thông tin'
 			}
-
-			db.query(setForeignDD_1, (err, results) => {
-				res.status(200).json({
-					message: 'Thêm dữ liệu thành công',
-					data: results
-				});
-			})
+		)
+	} else {
+		db.query(setForeignDD_0, (err, results) => {
+			db.query(insertDataDD, newData, (err, results, fields) => {
+				if (err) {
+					res.json(
+						400,
+						{
+						error: 2,
+						message: err.message
+					});
+					return;
+				}
+	
+				db.query(setForeignDD_1, (err, results) => {
+					res.status(200).json({
+						message: 'Thêm dữ liệu thành công',
+						data: results,
+						status: 'success'
+					});
+				})
+			});
 		});
-	})
+		
+	}
 });
 
 router.delete('/dondat', (req, res) => {
@@ -54,13 +70,19 @@ router.delete('/dondat', (req, res) => {
 
 	db.query(deleteDD, [ MADD ], (err, results) => {
 		if (err) {
-			res.status(400).json(err.message);
+			res.status(400).json(
+				{
+					error: 1,
+					message: err.message
+				}
+			);
 			return;
 		}
 
 		res.json({
 			message: 'Xóa dữ liệu thành công',
-			data: results
+			data: results,
+			status: 'delete success'
 		});
 	});
 });
@@ -72,18 +94,32 @@ router.patch('/dondat', (req, res) => {
 		MADD
 	} = req.body;
 
-	db.query(updateDD, [ NVDAT, NGAYDAT, MADD ], (err, results) => {
-		if (err) {
-			res.status(400).json(err.message);
-			return;
-		}
-
-		res.json({
-			message: 'Cập nhật dữ liệu thành công',
-			data: results,
-			status: 'success'
+	if (NVDAT === '' || NGAYDAT === '' || MADD === '') {
+		res.json(
+			401,
+			{
+				error: 1,
+				message: 'Mời bạn nhập đầy đủ'
+			}
+		);
+	} else {
+		db.query(updateDD, [ NVDAT, NGAYDAT, MADD ], (err, results) => {
+			if (err) {
+				res.status(400).json({
+					error: 2,
+					message: err.message
+				});
+				return;
+			}
+	
+			res.json({
+				message: 'Cập nhật dữ liệu thành công',
+				data: results,
+				status: 'success'
+			});
 		});
-	});
+
+	}
 })
 
 
