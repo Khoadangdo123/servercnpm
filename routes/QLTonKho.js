@@ -44,18 +44,43 @@ router.post('/tonkho', (req, res) => {
     HSD
 	];
 
-	db.query(insertTonKho, newData, (err, results) => {
-		if (err) {
-			res.status(400).json(err.message);
-			return;
-		}
-
+	if (
+		MASP === '' || MANCC === '' || TenSPTK === '' ||
+    Loai === '' || SLTon === '' || DONGIA === '' || HSD === ''
+	) {
 		res.status(200).json({
-			message: 'Thêm data cơ sở dữ liệu',
-			data: results,
-			status: 'success'
-		})
-	});
+			error: 1,
+			message: "Bạn cần nhập đầy đủ thông tin"
+		});
+		return;
+	} else {
+		db.query(insertTonKho, newData, (err, results) => {
+			if (Number(SLTon) <= 0 || Number(DONGIA) <= 0) {
+				res.status(200).json({
+					error: 2,
+					message: "Bạn cần nhập số dương"
+				});
+				return;
+
+			} else {
+				if (err) {
+					res.status(400).json({
+						error: 3,
+						message: err.message
+					});
+					return;
+				}
+		
+				res.status(200).json({
+					message: 'Thêm data cơ sở dữ liệu',
+					data: results,
+					status: 'success'
+				});
+			}
+
+		});
+	}
+
 });
 
 router.delete('/tonkho', (req, res) => {
@@ -97,18 +122,39 @@ router.patch('/tonkho', (req, res) => {
 		MASP,
 	];
 
-	db.query(updateTonKho, updatedData, (err, results) => {
-		if (err) {
-			res.status(400).json(err.message);
+	if (
+		MASP === '' || MANCC === '' || TenSPTK === '' ||
+    Loai === '' || SLTon === '' || DONGIA === '' || HSD === ''
+	) {
+		res.status(200).json({
+			error: 1,
+			message: 'Bạn cần nhập đầy đủ thông tin'
+		})
+	} else {
+		if (Number(SLTon) <= 0 || Number(DONGIA) <= 0) {
+			res.status(200).json({
+				error: 2,
+				message: "Cần bạn nhập số dương"
+			});
 			return;
+		} else {
+			db.query(updateTonKho, updatedData, (err, results) => {
+				if (err) {
+					res.status(400).json({
+						error: 1,
+						message: err.message
+					});
+					return;
+				}
+		
+				res.json({
+					message: 'Cập nhật dữ liệu thành công',
+					data: updatedData,
+					status: 'success'
+				});
+			});
 		}
-
-		res.json({
-			message: 'Cập nhật dữ liệu thành công',
-			data: updatedData,
-			status: 'success'
-		});
-	});
+	}
 })
 
 
