@@ -89,7 +89,10 @@ router.delete('/tonkho', (req, res) => {
 
 	db.query(deleteTonKho, [ MASP ], (err, results) => {
 		if (err) {
-			res.status(400).json(err.message);
+			res.status(400).json({
+				error: 1,
+				message: err.message
+			});
 			return;
 		}
 
