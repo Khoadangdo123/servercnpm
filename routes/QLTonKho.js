@@ -27,21 +27,21 @@ router.post('/tonkho', (req, res) => {
 
 	const {
 		MASP,
-    MANCC,
-    TenSPTK,
-    Loai,
-    SLTon,
-    DONGIA,
-    HSD
+		MANCC,
+		TenSPTK,
+		Loai,
+		SLTon,
+		DONGIA,
+		HSD
 	} = req.body;
 	const newData = [
 		MASP,
-    MANCC,
-    TenSPTK,
-    Loai,
-    SLTon,
-    DONGIA,
-    HSD
+		MANCC,
+		TenSPTK,
+		Loai,
+		SLTon,
+		DONGIA,
+		HSD
 	];
 
 	if (
@@ -87,7 +87,7 @@ router.delete('/tonkho', (req, res) => {
 	const { MASP } = req.body;
 
 
-	db.query(deleteTonKho, [ MASP ], (err, results) => {
+	db.query(deleteTonKho, [MASP], (err, results) => {
 		if (err) {
 			res.status(400).json({
 				error: 1,
@@ -107,21 +107,21 @@ router.delete('/tonkho', (req, res) => {
 router.patch('/tonkho', (req, res) => {
 	const {
 		MASP,
-    MANCC,
-    TenSPTK,
-    Loai,
-    SLTon,
-    DONGIA,
-    HSD
+		MANCC,
+		TenSPTK,
+		Loai,
+		SLTon,
+		DONGIA,
+		HSD
 	} = req.body;
 
 	const updatedData = [
 		MANCC,
-    TenSPTK,
-    Loai,
-    SLTon,
-    DONGIA,
-    HSD,
+		TenSPTK,
+		Loai,
+		SLTon,
+		DONGIA,
+		HSD,
 		MASP,
 	];
 
