@@ -45,24 +45,41 @@ router.post('/hoadon', (req, res) => {
 
 	} else {
 		
-		db.query(setForeignHD_0, (err, results) => {
-			db.query(insertHD, newData, (err, results) => {
-				if (err) {
-					res.status(400).json({
-						message: err.message,
-						error: 2
-					});
-					return;
-				} else {
-					res.status(200).json({
-						message: 'Thêm data cơ sở dữ liệu',
-						data: results,
-						status: 'success'
-					});
-				}
+		db.query(insertHD, newData, (err, results) => {
+			if (err) {
+				res.status(400).json({
+					message: err.message,
+					error: 2
+				});
+				return;
+			} else {
+				res.status(200).json({
+					message: 'Thêm data cơ sở dữ liệu',
+					data: results,
+					status: 'success'
+				});
+			}
+	
+		});
+
+		// db.query(setForeignHD_0, (err, results) => {
+		// 	db.query(insertHD, newData, (err, results) => {
+		// 		if (err) {
+		// 			res.status(400).json({
+		// 				message: err.message,
+		// 				error: 2
+		// 			});
+		// 			return;
+		// 		} else {
+		// 			res.status(200).json({
+		// 				message: 'Thêm data cơ sở dữ liệu',
+		// 				data: results,
+		// 				status: 'success'
+		// 			});
+		// 		}
 		
-			});
-		})
+		// 	});
+		// })
 	}
 
 });

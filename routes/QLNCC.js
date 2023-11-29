@@ -53,19 +53,31 @@ router.post('/nhacungcap', (req, res) => {
 router.delete('/nhacungcap', (req, res) => {
 	const { MANCC } = req.body;
 
-	db.query(setForeignNCC_0, (err, results) => {
-		db.query(deleteNCC, [ MANCC ], (err, results) => {
-			if (err) {
-				res.status(400).json(err.message);
-				return;
-			}
-	
-			res.json({
-				message: 'Xóa dữ liệu thành công',
-				data: results
-			});
+	db.query(deleteNCC, [ MANCC ], (err, results) => {
+		if (err) {
+			res.status(400).json(err.message);
+			return;
+		}
+
+		res.json({
+			message: 'Xóa dữ liệu thành công',
+			data: results
 		});
 	});
+
+	// db.query(setForeignNCC_0, (err, results) => {
+	// 	db.query(deleteNCC, [ MANCC ], (err, results) => {
+	// 		if (err) {
+	// 			res.status(400).json(err.message);
+	// 			return;
+	// 		}
+	
+	// 		res.json({
+	// 			message: 'Xóa dữ liệu thành công',
+	// 			data: results
+	// 		});
+	// 	});
+	// });
 });
 
 router.patch('/nhacungcap', (req, res) => {

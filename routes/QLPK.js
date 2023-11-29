@@ -61,23 +61,38 @@ router.post('/phieukiem', (req, res) => {
 				message: "Bạn cần nhập số dương"
 			});
 		} else {
-			db.query(setForeignPK_0, (err, results) => {
-				db.query(insertPK, newData, (err, results) => {
-					if (err) {
-						res.status(400).json({
-							error: 3,
-							message: err.message
-						});
-						return;
-					}
-			
-					res.status(200).json({
-						message: 'Thêm data cơ sở dữ liệu',
-						data: results,
-						status: 'success'
+			db.query(insertPK, newData, (err, results) => {
+				if (err) {
+					res.status(400).json({
+						error: 3,
+						message: err.message
 					});
+					return;
+				}
+		
+				res.status(200).json({
+					message: 'Thêm data cơ sở dữ liệu',
+					data: results,
+					status: 'success'
 				});
 			});
+			// db.query(setForeignPK_0, (err, results) => {
+			// 	db.query(insertPK, newData, (err, results) => {
+			// 		if (err) {
+			// 			res.status(400).json({
+			// 				error: 3,
+			// 				message: err.message
+			// 			});
+			// 			return;
+			// 		}
+			
+			// 		res.status(200).json({
+			// 			message: 'Thêm data cơ sở dữ liệu',
+			// 			data: results,
+			// 			status: 'success'
+			// 		});
+			// 	});
+			// });
 		}
 	}
 

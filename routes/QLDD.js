@@ -40,27 +40,48 @@ router.post('/dondat', (req, res) => {
 			}
 		)
 	} else {
-		db.query(setForeignDD_0, (err, results) => {
-			db.query(insertDataDD, newData, (err, results, fields) => {
-				if (err) {
-					res.json(
-						400,
-						{
-						error: 2,
-						message: err.message
-					});
-					return;
-				}
-	
-				db.query(setForeignDD_1, (err, results) => {
-					res.status(200).json({
-						message: 'Thêm dữ liệu thành công',
-						data: results,
-						status: 'success'
-					});
-				})
-			});
+
+		db.query(insertDataDD, newData, (err, results, fields) => {
+			if (err) {
+				res.json(
+					400,
+					{
+					error: 2,
+					message: err.message
+				});
+				return;
+			}
+
+			db.query(setForeignDD_1, (err, results) => {
+				res.status(200).json({
+					message: 'Thêm dữ liệu thành công',
+					data: results,
+					status: 'success'
+				});
+			})
 		});
+
+		// db.query(setForeignDD_0, (err, results) => {
+		// 	db.query(insertDataDD, newData, (err, results, fields) => {
+		// 		if (err) {
+		// 			res.json(
+		// 				400,
+		// 				{
+		// 				error: 2,
+		// 				message: err.message
+		// 			});
+		// 			return;
+		// 		}
+	
+		// 		db.query(setForeignDD_1, (err, results) => {
+		// 			res.status(200).json({
+		// 				message: 'Thêm dữ liệu thành công',
+		// 				data: results,
+		// 				status: 'success'
+		// 			});
+		// 		})
+		// 	});
+		// });
 		
 	}
 });

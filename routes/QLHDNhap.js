@@ -33,22 +33,37 @@ router.post('/hoadonnhap', (req, res) => {
 		TONG,
 	];
 
-	db.query(setForeignHDNhap_0, (err, results) => {
-		db.query(insertHDNhap, newData, (err, results) => {
-			if (err) {
-				res.status(400).json({
-					error: err.message,
-					data: "oke"
-				});
-				return;
-			}
+	db.query(insertHDNhap, newData, (err, results) => {
+		if (err) {
+			res.status(400).json({
+				error: err.message,
+				data: "oke"
+			});
+			return;
+		}
+
+		res.status(200).json({
+			message: 'Thêm data cơ sở dữ liệu',
+			data: results
+		})
+	});
+
+	// db.query(setForeignHDNhap_0, (err, results) => {
+	// 	db.query(insertHDNhap, newData, (err, results) => {
+	// 		if (err) {
+	// 			res.status(400).json({
+	// 				error: err.message,
+	// 				data: "oke"
+	// 			});
+	// 			return;
+	// 		}
 	
-			res.status(200).json({
-				message: 'Thêm data cơ sở dữ liệu',
-				data: results
-			})
-		});
-	})
+	// 		res.status(200).json({
+	// 			message: 'Thêm data cơ sở dữ liệu',
+	// 			data: results
+	// 		})
+	// 	});
+	// })
 
 });
 
