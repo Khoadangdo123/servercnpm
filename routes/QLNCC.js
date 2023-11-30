@@ -32,22 +32,36 @@ router.post('/nhacungcap', (req, res) => {
 		TENNCC,
 		DIACHI
 	];
+	if (MACC === '' || TENNCC === '' || DIACHI === '') {
+		res.json(
+			401,
+			{
+				error: 1,
+				message: 'Bạn cần nhập đầy đủ thông tin'
+			}
+		)
+	} else {
 
-	db.query(insertNCC, newData, (err, results) => {
-		if (err) {
-			res.status(400).json({
-				error: err.message,
-				// data: "oke"
-			});
-			return;
-		}
+		db.query(insertDataDD, newData, (err, results, fields) => {
+			if (err) {
+				res.json(
+					400,
+					{
+					error: 2,
+					message: err.message
+				});
+				return;
+			}
 
-		res.status(200).json({
-			message: 'Thêm data cơ sở dữ liệu',
-			data: results
+			db.query(setForeignDD_1, (err, results) => {
+				res.status(200).json({
+					message: 'Thêm dữ liệu thành công',
+					data: results,
+					status: 'success'
+				});
+			})
 		})
-	});
-
+	}
 });
 
 router.delete('/nhacungcap', (req, res) => {
@@ -55,29 +69,20 @@ router.delete('/nhacungcap', (req, res) => {
 
 	db.query(deleteNCC, [ MANCC ], (err, results) => {
 		if (err) {
-			res.status(400).json(err.message);
-			return;
+			res.status(400).json(
+				{
+					error: 1,
+					message: err.message
+				}
+			);
 		}
 
 		res.json({
 			message: 'Xóa dữ liệu thành công',
-			data: results
+			data: results,
+			status: 'delete success'
 		});
 	});
-
-	// db.query(setForeignNCC_0, (err, results) => {
-	// 	db.query(deleteNCC, [ MANCC ], (err, results) => {
-	// 		if (err) {
-	// 			res.status(400).json(err.message);
-	// 			return;
-	// 		}
-	
-	// 		res.json({
-	// 			message: 'Xóa dữ liệu thành công',
-	// 			data: results
-	// 		});
-	// 	});
-	// });
 });
 
 router.patch('/nhacungcap', (req, res) => {
@@ -89,22 +94,35 @@ router.patch('/nhacungcap', (req, res) => {
 
 	const updatedData = [
 		TENNCC,
-		DIACHI,
-		MANCC,
-	];
+		DIACHI
+	]
 
-	db.query(updateNCC, updatedData, (err, results) => {
-		if (err) {
-			res.status(400).json(err.message);
-			return;
-		}
+	if (MANCC === '' || TENNCC === '' || DIACHI === '') {
+		res.json(
+			401,
+			{
+				error: 1,
+				message: 'Bạn cần nhập đầy đủ thông tin'
+			}
+		);
+	} else {
+		db.query(updateDD, [ MANCC, TENNCC, DIACHI ], (err, results) => {
+			if (err) {
+				res.status(400).json({
+					error: 2,
+					message: err.message
+				});
+				return;
+			}
 
-		res.json({
-			message: 'Cập nhật dữ liệu thành công',
-			data: results
+			res.json({
+				message: 'Cập nhật dữ liệu thành công',
+				data: results,
+				status: 'success'
+			});	
 		});
-	});
-})
+	}
+});
 
 
 module.exports = router;
