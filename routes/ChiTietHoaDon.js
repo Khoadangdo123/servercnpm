@@ -87,7 +87,7 @@ router.patch('/chitiethoadon', (req, res) => {
 router.delete('/chitiethoadon', (req, res) => {
 	const { MAHD, MASP, SOLUONG } = req.body;
 
-	if (Number(SOLUONG) >= 0) {
+	if (Number(SOLUONG) > 0) {
 		res.json({
 			error: 2,
 			message: 'Số lượng lớn hơn 0, xóa không thành công'
@@ -159,7 +159,7 @@ router.post('/chitiethoadonadd',(req, res) => {
 
 	} else {
 
-		if (Number(DONGIA) < 0 || Number(SOLUONG) < 0) {
+		if (Number(DONGIA) <= 0 || Number(SOLUONG) <= 0) {
 			res.json(
 				200,
 				{

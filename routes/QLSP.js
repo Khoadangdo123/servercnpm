@@ -82,7 +82,7 @@ router.delete('/sanpham', (req, res) => {
 	const { MASP, SOLUONG } = req.body;
 
 
-	if (Number(SOLUONG) >= 0) {
+	if (Number(SOLUONG) > 0) {
 		res.json({
 			error: 1,
 			message: 'Số lượng sản phẩm còn, Xóa không thành công'

@@ -132,7 +132,7 @@ router.delete('/nhanvien', (req, res) => {
 				});
 				return;
 			}
-	
+			
 			res.json({
 				message: 'Xóa dữ liệu thành công',
 				data: results,

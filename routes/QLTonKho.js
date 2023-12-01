@@ -84,9 +84,9 @@ router.post('/tonkho', (req, res) => {
 });
 
 router.delete('/tonkho', (req, res) => {
-	const { MASP, SLTON } = req.body;
+	const { MASP, SLTon } = req.body;
 
-	if (Number(SLTON) >= 0) {
+	if (Number(SLTon) > 0) {
 		res.json({
 			error: 2,
 			message: 'Số lượng tồn kho lớn 0, Xóa không thành công'
@@ -151,7 +151,7 @@ router.patch('/tonkho', (req, res) => {
 			db.query(updateTonKho, updatedData, (err, results) => {
 				if (err) {
 					res.status(400).json({
-						error: 1,
+						error: 3,
 						message: err.message
 					});
 					return;
