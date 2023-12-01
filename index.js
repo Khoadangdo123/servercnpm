@@ -17,6 +17,7 @@ const qlhd = require('./routes/QLHD.js');
 const qlchiTiet = require('./routes/ChiTietHoaDon.js');
 const qlchiTietDH = require('./routes/ChiTietDatHang.js');
 const qltonkho = require('./routes/QLTonKho.js');
+const chitietHoaDonNhap = require('./routes/ChiTietHoaDonNhap.js')
 app.use(cors())
 // app.use(bodyParser.json());
 // app.use(express.json());
@@ -34,7 +35,8 @@ app.use(
   qlhd,
   qltonkho,
   qlchiTiet,
-  qlchiTietDH
+  qlchiTietDH,
+  chitietHoaDonNhap,
 );
 
 // Connect
