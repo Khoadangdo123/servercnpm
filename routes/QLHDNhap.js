@@ -32,24 +32,36 @@ router.post('/hoadonnhap', (req, res) => {
 		NGNHAP,
 		TONG,
 	];
+	if (MAHD === '' || NVXUAT === '' || NGNHAP === '' || TONG === '') {
+		res.json(
+			401,
+			{
+				error: 1,
+				message: 'Bạn cần nhập đầy đủ thông tin'
+			}
+		)
+	} else {
 
-	db.query(setForeignHDNhap_0, (err, results) => {
-		db.query(insertHDNhap, newData, (err, results) => {
+		db.query(insertDataDD, newData, (err, results, fields) => {
 			if (err) {
-				res.status(400).json({
-					error: err.message,
-					data: "oke"
+				res.json(
+					400,
+					{
+					error: 2,
+					message: err.message
 				});
 				return;
 			}
-	
-			res.status(200).json({
-				message: 'Thêm data cơ sở dữ liệu',
-				data: results
-			})
-		});
-	})
 
+			db.query(setForeignDD_1, (err, results) => {
+				res.status(200).json({
+					message: 'Thêm dữ liệu thành công',
+					data: results,
+					status: 'success'
+				});
+			})
+		});		
+	}
 });
 
 router.delete('/hoadonnhap', (req, res) => {
@@ -57,13 +69,19 @@ router.delete('/hoadonnhap', (req, res) => {
 
 	db.query(deleteHDNhap, [ MAHD ], (err, results) => {
 		if (err) {
-			res.status(400).json(err.message);
+			res.status(400).json(
+				{
+				error: 1,
+				message: err.message
+				}
+			);
 			return;
 		}
 
 		res.json({
 			message: 'Xóa dữ liệu thành công',
-			data: results
+			data: results,
+			status: 'delete success'
 		});
 	});
 });
@@ -79,21 +97,35 @@ router.patch('/hoadonnhap', (req, res) => {
 	const updatedData = [
 		NVXUAT,
 		NGNHAP,
-		TONG,
-		MAHD,
-	];
+		TONG
+	]
 
-	db.query(updateHDNhap, updatedData, (err, results) => {
-		if (err) {
-			res.status(400).json(err.message);
-			return;
-		}
-
-		res.json({
-			message: 'Cập nhật dữ liệu thành công',
-			data: results
+	if (MAHD === '' || NVXUAT === '' || NGNHAP === '' || TONG === '') {
+		res.json(
+			401,
+			{
+				error: 1,
+				message: 'Mời bạn nhập đầy đủ'
+			}
+		);
+	} else {
+		db.query(updateDD, [ NVXUAT, NGNHAP, TONG ], (err, results) => {
+			if (err) {
+				res.status(400).json({
+					error: 2,
+					message: err.message
+				});
+				return;
+			}
+	
+			res.json({
+				message: 'Cập nhật dữ liệu thành công',
+				data: results,
+				status: 'success'
+			});
 		});
-	});
+
+	}
 })
 
 

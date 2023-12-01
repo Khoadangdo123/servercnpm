@@ -26,32 +26,61 @@ router.get('/hoadon', (req, res) => {
 
 router.post('/hoadon', (req, res) => {
 
-	const { MAHD,MAKH,NVXUAT,NGAYXUAT,TONGTIEN,TRANGTHAI } = req.body;
+	const { MAHD,MAKH,NVXUAT,NGAYXUAT,TRANGTHAI } = req.body;
 	const newData = [
 		MAHD,
 		MAKH,
 		NVXUAT,
 		NGAYXUAT,
-		TONGTIEN,
 		TRANGTHAI
 	];
 
-	db.query(setForeignHD_0, (err, results) => {
+	if (MAKH === '' || NVXUAT === '' || NGAYXUAT === '' || TRANGTHAI === '') {
+
+		res.status(200).json({
+			message: 'Bạn cần nhập đầy đủ dữ liệu',
+			error: 1
+		});
+		return;
+
+	} else {
+		
 		db.query(insertHD, newData, (err, results) => {
 			if (err) {
 				res.status(400).json({
-					error: err.message,
-					// data: "oke"
+					message: err.message,
+					error: 2
 				});
 				return;
+			} else {
+				res.status(200).json({
+					message: 'Thêm data cơ sở dữ liệu',
+					data: results,
+					status: 'success'
+				});
 			}
 	
-			res.status(200).json({
-				message: 'Thêm data cơ sở dữ liệu',
-				data: results
-			})
 		});
-	})
+
+		// db.query(setForeignHD_0, (err, results) => {
+		// 	db.query(insertHD, newData, (err, results) => {
+		// 		if (err) {
+		// 			res.status(400).json({
+		// 				message: err.message,
+		// 				error: 2
+		// 			});
+		// 			return;
+		// 		} else {
+		// 			res.status(200).json({
+		// 				message: 'Thêm data cơ sở dữ liệu',
+		// 				data: results,
+		// 				status: 'success'
+		// 			});
+		// 		}
+		
+		// 	});
+		// })
+	}
 
 });
 
@@ -67,7 +96,8 @@ router.delete('/hoadon', (req, res) => {
 	
 			res.json({
 				message: 'Xóa dữ liệu thành công',
-				data: results
+				data: results,
+				status: 'success'
 			});
 		});
 	});
@@ -79,7 +109,6 @@ router.patch('/hoadon', (req, res) => {
 		MAKH,
 		NVXUAT,
 		NGAYXUAT,
-		TONGTIEN,
 		TRANGTHAI
 	} = req.body;
 
@@ -87,22 +116,41 @@ router.patch('/hoadon', (req, res) => {
 		MAKH,
 		NVXUAT,
 		NGAYXUAT,
-		TONGTIEN,
 		TRANGTHAI,
-		MAHD,
+		MAHD
 	];
 
-	db.query(updateHD, updatedData, (err, results) => {
-		if (err) {
-			res.status(400).json(err.message);
-			return;
-		}
 
-		res.json({
-			message: 'Cập nhật dữ liệu thành công',
-			data: results
+	if (MAKH === '' || NVXUAT === '' || NGAYXUAT === '' || TRANGTHAI === '') {
+		res.json(
+			{
+				message: "Bạn cần nhập đầy đủ dữ liệu",
+				error: 1
+			}
+		);
+		return;
+	} else {
+		db.query(updateHD, updatedData, (err, results) => {
+			if (err) {
+				res.status(400).json(
+					{
+						error: 2,
+						message: err.message
+					}
+				);
+				return;
+			} else {
+				res.json({
+					message: 'Cập nhật dữ liệu thành công',
+					data: results,
+					status: 'success'
+				});
+				return;
+			}
+	
 		});
-	});
+	}
+
 })
 
 
