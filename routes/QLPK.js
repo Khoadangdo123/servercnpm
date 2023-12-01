@@ -102,21 +102,30 @@ router.post('/phieukiem', (req, res) => {
 router.delete('/phieukiem', (req, res) => {
 	const { MAPK } = req.body;
 
-	db.query(deletePK, [ MAPK ], (err, results) => {
-		if (err) {
-			res.status(400).json({
-				error: 1,
-				message: err.message
-			});
-			return;
-		}
 
+	if (Number(SLGIAO) >= 0) {
 		res.json({
-			message: 'Xóa dữ liệu thành công',
-			data: results,
-			status: 'delete success'
+			error: 2,
+			message: 'Số lượng tồn lớn hơn 0, Xóa không thành công'
+		})
+	} else {
+		db.query(deletePK, [ MAPK ], (err, results) => {
+			if (err) {
+				res.status(400).json({
+					error: 1,
+					message: err.message
+				});
+				return;
+			}
+	
+			res.json({
+				message: 'Xóa dữ liệu thành công',
+				data: results,
+				status: 'delete success'
+			});
 		});
-	});
+	}
+
 });
 
 // NOTE: sửa

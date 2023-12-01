@@ -82,24 +82,31 @@ router.patch('/chitietdathang', (req, res) => {
 });
 
 router.delete('/chitietdathang', (req, res) => {
-	const { MADD, MASP } = req.body;
+	const { MADD, MASP, SOLUONG } = req.body;
 
 
-	db.query(deleteDonDat, [ MADD, MASP ], (err, results) => {
-		if (err) {
-			res.status(400).json({
-				error: 1,
-				message: err.message
-			});
-			return;
-		}
-
+	if (Number(SOLUONG) > 0) {
 		res.json({
-			message: 'Xóa dữ liệu thành công',
-			data: results,
-			status: 'delete success'
+			error: 2,
+			message: "Số lượng lớn hơn không, xóa không thành công"
 		});
-	});
+	} else {
+		db.query(deleteDonDat, [ MADD, MASP ], (err, results) => {
+			if (err) {
+				res.status(400).json({
+					error: 1,
+					message: err.message
+				});
+				return;
+			}
+	
+			res.json({
+				message: 'Xóa dữ liệu thành công',
+				data: results,
+				status: 'delete success'
+			});
+		});
+	}
 
 	// Loại bỏ
 	// db.query(setForeignCTHD_0, (err, results) => {
@@ -148,12 +155,12 @@ router.post('/chitietdathang',(req, res) => {
 	} else {
 		db.query(insertDonDat, insertData, (err, results, fields) => {
 
-			if (Number(SOLUONG) < 0 || Number(DONGIA) < 0) {
+			if (Number(SOLUONG) <= 0 || Number(DONGIA) <= 0) {
 				res.json(
 					400,
 					{
 						error: 1,
-						message: 'Bạn cần nhập số dương'
+						message: 'Lưu thông tin không thành công'
 					}
 				)
 			} else {

@@ -120,23 +120,33 @@ router.post('/nhanvien', (req, res) => {
 });
 
 router.delete('/nhanvien', (req, res) => {
-	const { MANV } = req.body;
+	const { MANV, TRANGTHAI } = req.body;
 
-	db.query(deleteNhanVien, [ MANV ], (err, results) => {
-		if (err) {
-			res.status(400).json({
-				error: 1,
-				message: err.message
+
+	if (TRANGTHAI === 'Đã nghỉ') {
+		db.query(deleteNhanVien, [ MANV ], (err, results) => {
+			if (err) {
+				res.status(400).json({
+					error: 1,
+					message: err.message
+				});
+				return;
+			}
+	
+			res.json({
+				message: 'Xóa dữ liệu thành công',
+				data: results,
+				status: 'delete success'
 			});
-			return;
-		}
-
-		res.json({
-			message: 'Xóa dữ liệu thành công',
-			data: results,
-			status: 'delete success'
 		});
-	});
+	} else {
+		res.json({
+			error: 2,
+			message: 'Tài khoản vẫn còn hiệu lực, Xóa không thành công'
+		})
+	}
+	
+
 });
 
 router.patch('/nhanvien', (req, res) => {
@@ -193,7 +203,6 @@ router.patch('/nhanvien', (req, res) => {
 		MANV
 	];
 
-	console.log(SDT.length);
 
 	if (
 		MANV === '' || TENNV === '' || DIACHI === '' || NGAYSINH === '' || GIOITINH === '' ||

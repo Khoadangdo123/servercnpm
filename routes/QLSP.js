@@ -79,20 +79,34 @@ router.post('/sanpham', (req, res) => {
 });
 
 router.delete('/sanpham', (req, res) => {
-	const { MASP } = req.body;
+	const { MASP, SOLUONG } = req.body;
 
-	db.query(deleteSanPham, [ MASP ], (err, results) => {
-		if (err) {
-			res.status(400).json(err.message);
-			return;
-		}
 
+	if (Number(SOLUONG) >= 0) {
 		res.json({
-			message: 'Xóa dữ liệu thành công',
-			data: results,
-			status: 'delete success'
+			error: 1,
+			message: 'Số lượng sản phẩm còn, Xóa không thành công'
+		})
+	} else {
+		db.query(deleteSanPham, [ MASP ], (err, results) => {
+			if (err) {
+				res.status(400).json(
+					{
+						error: 2,
+						message: err.message
+					}
+				);
+				return;
+			}
+	
+			res.json({
+				message: 'Xóa dữ liệu thành công',
+				data: results,
+				status: 'delete success'
+			});
 		});
-	});
+	}
+
 });
 
 router.patch('/sanpham', (req, res) => {

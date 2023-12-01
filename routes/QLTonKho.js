@@ -84,24 +84,31 @@ router.post('/tonkho', (req, res) => {
 });
 
 router.delete('/tonkho', (req, res) => {
-	const { MASP } = req.body;
+	const { MASP, SLTON } = req.body;
 
-
-	db.query(deleteTonKho, [MASP], (err, results) => {
-		if (err) {
-			res.status(400).json({
-				error: 1,
-				message: err.message
-			});
-			return;
-		}
-
+	if (Number(SLTON) >= 0) {
 		res.json({
-			message: 'Xóa dữ liệu thành công',
-			data: results,
-			status: 'delete success'
+			error: 2,
+			message: 'Số lượng tồn kho lớn 0, Xóa không thành công'
+		})
+	} else {
+		db.query(deleteTonKho, [MASP], (err, results) => {
+			if (err) {
+				res.status(400).json({
+					error: 1,
+					message: err.message
+				});
+				return;
+			}
+	
+			res.json({
+				message: 'Xóa dữ liệu thành công',
+				data: results,
+				status: 'delete success'
+			});
 		});
-	});
+	}
+
 });
 
 router.patch('/tonkho', (req, res) => {

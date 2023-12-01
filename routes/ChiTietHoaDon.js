@@ -85,22 +85,31 @@ router.patch('/chitiethoadon', (req, res) => {
 });
 
 router.delete('/chitiethoadon', (req, res) => {
-	const { MAHD, MASP } = req.body;
-	db.query(deleteChiTietDonHang, [ MAHD, MASP ], (err, results) => {
-		if (err) {
-			res.status(400).json({
-				error: 1,
-				message: err.message
-			});
-			return;
-		}
+	const { MAHD, MASP, SOLUONG } = req.body;
 
+	if (Number(SOLUONG) >= 0) {
 		res.json({
-			message: 'Xóa dữ liệu thành công',
-			data: results,
-			status: 'success'
+			error: 2,
+			message: 'Số lượng lớn hơn 0, xóa không thành công'
+		})
+	} else {
+		db.query(deleteChiTietDonHang, [ MAHD, MASP ], (err, results) => {
+			if (err) {
+				res.status(400).json({
+					error: 1,
+					message: err.message
+				});
+				return;
+			}
+	
+			res.json({
+				message: 'Xóa dữ liệu thành công',
+				data: results,
+				status: 'success'
+			});
 		});
-	});
+	}
+
 
 	// db.query(setForeignCTHD_0, (err, results) => {
 	// 	db.query(deleteChiTietDonHang, [ MAHD, MASP ], (err, results) => {
