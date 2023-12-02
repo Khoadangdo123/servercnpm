@@ -89,6 +89,37 @@ const insertDonDat = "insert into CTDH(MADD,MASP,SOLUONG,DONGIA) values (?, ?, ?
 const updateDonDat = "update CTDH set SOLUONG = ?,DONGIA = ? where (MADD = ? and MASP = ?);";
 const deleteDonDat = "delete from CTDH where (MADD = ? and MASP = ?);";
 
+// NOTE: Chi tiết báo cáo thống kê
+const sanPhamBanChay = "SELECT S.*, C.TONG_SOLUONG_BAN "
++ "FROM SANPHAM S "
++ "JOIN ( "
++ " SELECT MASP, SUM(SOLUONG) AS TONG_SOLUONG_BAN"
++ " FROM CTHD"
++ " GROUP BY MASP"
++ " ORDER BY TONG_SOLUONG_BAN DESC"
++ " LIMIT 3"
++ " ) C ON S.MASP = C.MASP;";
+
+const sanPhamBanItNhat = "SELECT S.*, C.TONG_SOLUONG_BAN "
++ "FROM SANPHAM S "
++ " JOIN ("
++ " SELECT MASP, SUM(SOLUONG) AS TONG_SOLUONG_BAN"
++ " FROM CTHD"
++ " GROUP BY MASP"
++ " ORDER BY TONG_SOLUONG_BAN ASC"
++ " LIMIT 1"
++ " ) C ON S.MASP = C.MASP;"
+
+const hoaDonChoThanhToan = "select * from HOADON where TRANGTHAI = 'Chờ thanh toán';"
+const nhanVienDaNghi = "select * from NHANVIEN where TRANGTHAI = 'Đã nghỉ';";
+const nhanVienDangLam = "select * from NHANVIEN where TRANGTHAI = 'Đang làm';";
+const sanPhamHet = "select * from SANPHAM where SOLUONG = 0;";
+const soLuongNhanVien = "select * from NHANVIEN where TRANGTHAI = 'Đang làm';";
+const soLuongSanPham = "select * from SANPHAM where SOLUONG > 0;";
+const tongDoanhThu = "SELECT * FROM CTHD;";
+const soLuongDonHuy = "select * from HOADON where TRANGTHAI = 'Đã hủy';";
+const soLuongDonHang = "select * from HOADON where TRANGTHAI = 'Hoàn thành' or TRANGTHAI = 'Chờ thanh toán';"
+
 module.exports = {
 	// Đăng Nhập
 	selectTableNhanVien,
@@ -160,4 +191,16 @@ module.exports = {
 	insertDonDat,
 	updateDonDat,
 	deleteDonDat,
+	// Bảng thống kê
+	sanPhamBanChay,
+	sanPhamBanItNhat,
+	hoaDonChoThanhToan,
+	nhanVienDaNghi,
+	nhanVienDangLam,
+	sanPhamHet,
+	soLuongNhanVien,
+	soLuongSanPham,
+	tongDoanhThu,
+	soLuongDonHuy,
+	soLuongDonHang
 };

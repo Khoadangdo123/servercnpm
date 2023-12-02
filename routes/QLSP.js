@@ -130,6 +130,8 @@ router.patch('/sanpham', (req, res) => {
 		MASP,
 	];
 
+	console.log(updatedData)
+
 	db.query(updatedSanPham, updatedData, (err, results) => {
 
 		if (TENSP === '' || MANCC === '' || LOAI === '' || SOLUONG === '' || DONGIA === '' || HSD === '') {
