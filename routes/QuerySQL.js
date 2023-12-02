@@ -107,7 +107,7 @@ const sanPhamBanItNhat = "SELECT S.*, C.TONG_SOLUONG_BAN "
 + " FROM CTHD"
 + " GROUP BY MASP"
 + " ORDER BY TONG_SOLUONG_BAN ASC"
-+ " LIMIT 1"
++ " LIMIT 3"
 + " ) C ON S.MASP = C.MASP;"
 
 const hoaDonChoThanhToan = "select * from HOADON where TRANGTHAI = 'Chờ thanh toán';"
