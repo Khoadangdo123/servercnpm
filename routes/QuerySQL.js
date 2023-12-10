@@ -42,8 +42,8 @@ const deletePK = "delete from PHIEUKIEM where MAPK = ?;";
 const tableHDNhap = "select * from HDNHAP";
 const setForeignHDNhap_0 = "SET FOREIGN_KEY_CHECKS = 0;";
 const setForeignHDNhap_1 = "SET FOREIGN_KEY_CHECKS = 1;";
-const insertHDNhap = "INSERT INTO HDNHAP(MAHD,NVXUAT,NGNHAP,TONG) VALUES (?, ?, ?, ?);";
-const updateHDNhap = "update HDNHAP set NVXUAT = ?, NGNHAP = ?, TONG = ? where MAHD = ?;";
+const insertHDNhap = "INSERT INTO HDNHAP(MAHD,NVXUAT,NGAYNHAP) VALUES (?, ?, ?);";
+const updateHDNhap = "update HDNHAP set NVXUAT = ?, NGAYNHAP = ? where MAHD = ?;";
 const deleteHDNhap = "delete from HDNHAP where MAHD = ?;";
 
 // NOTE: QL Nhà cung cấp phải fix lại
@@ -107,7 +107,7 @@ const sanPhamBanItNhat = "SELECT S.*, C.TONG_SOLUONG_BAN "
 + " FROM CTHD"
 + " GROUP BY MASP"
 + " ORDER BY TONG_SOLUONG_BAN ASC"
-+ " LIMIT 1"
++ " LIMIT 3"
 + " ) C ON S.MASP = C.MASP;"
 
 const hoaDonChoThanhToan = "select * from HOADON where TRANGTHAI = 'Chờ thanh toán';"
@@ -119,6 +119,11 @@ const soLuongSanPham = "select * from SANPHAM where SOLUONG > 0;";
 const tongDoanhThu = "SELECT * FROM CTHD;";
 const soLuongDonHuy = "select * from HOADON where TRANGTHAI = 'Đã hủy';";
 const soLuongDonHang = "select * from HOADON where TRANGTHAI = 'Hoàn thành' or TRANGTHAI = 'Chờ thanh toán';"
+
+const tableChiTietHoaDonNhap = "Select * from CTDN where MAHD = ?;";
+const updateChiTietHoaDonNhap = "update CTDN set DONGIA = ?, SOLUONG = ? where MAHD = ? and MASP = ? ;"
+const insertChiTietHoaDonNhap = "insert into CTDN(MAHD,MASP,DONGIA,SOLUONG) values (?, ?, ?, ?);"
+const deleteChiTietHoaDonNhap = "delete from CTDN where MAHD = ? and MASP = ?;"
 
 module.exports = {
 	// Đăng Nhập
@@ -202,5 +207,10 @@ module.exports = {
 	soLuongSanPham,
 	tongDoanhThu,
 	soLuongDonHuy,
-	soLuongDonHang
+	soLuongDonHang,
+	// Chi tiet hoa don nhap
+	tableChiTietHoaDonNhap,
+	updateChiTietHoaDonNhap,
+	insertChiTietHoaDonNhap,
+	deleteChiTietHoaDonNhap
 };

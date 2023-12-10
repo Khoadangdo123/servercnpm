@@ -110,24 +110,6 @@ router.delete('/chitiethoadon', (req, res) => {
 		});
 	}
 
-
-	// db.query(setForeignCTHD_0, (err, results) => {
-	// 	db.query(deleteChiTietDonHang, [ MAHD, MASP ], (err, results) => {
-	// 		if (err) {
-	// 			res.status(400).json({
-	// 				error: 1,
-	// 				message: err.message
-	// 			});
-	// 			return;
-	// 		}
-	
-	// 		res.json({
-	// 			message: 'Xóa dữ liệu thành công',
-	// 			data: results,
-	// 			status: 'success'
-	// 		});
-	// 	});
-	// });
 });
 
 router.post('/chitiethoadonadd',(req, res) => {
@@ -159,7 +141,7 @@ router.post('/chitiethoadonadd',(req, res) => {
 
 	} else {
 
-		if (Number(DONGIA) <= 0 || Number(SOLUONG) <= 0) {
+		if (Number(DONGIA) < 0 || Number(SOLUONG) < 0) {
 			res.json(
 				200,
 				{
@@ -168,7 +150,6 @@ router.post('/chitiethoadonadd',(req, res) => {
 				}
 			);
 			return;
-
 		} else {
 			db.query(insertChiTietDonHang, insertData, (err, results, fields) => {
 				if (err) {

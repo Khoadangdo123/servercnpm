@@ -141,7 +141,7 @@ router.patch('/tonkho', (req, res) => {
 			message: 'Bạn cần nhập đầy đủ thông tin'
 		})
 	} else {
-		if (Number(SLTon) <= 0 || Number(DONGIA) <= 0) {
+		if (Number(SLTon) < 0 || Number(DONGIA) < 0) {
 			res.status(200).json({
 				error: 2,
 				message: "Cần bạn nhập số dương"

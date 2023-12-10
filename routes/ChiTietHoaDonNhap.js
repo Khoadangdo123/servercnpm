@@ -16,7 +16,9 @@ router.post('/chitiethoadonnhap',(req, res) => {
 
 	db.query(tableChiTietHoaDonNhap, [ MAHD ], (err, results, fields) => {
 		if (err) {
-			res.status(400).json('Error executing query:', err);
+			res.status(400).json({
+				error: err.message
+			});
 			return;
 		}
 
@@ -85,43 +87,35 @@ router.patch('/chitiethoadonnhap', (req, res) => {
 });
 
 router.delete('/chitiethoadonnhap', (req, res) => {
-	const { MAHD, MASP } = req.body;
-	db.query(deleteChiTietHoaDonNhap, [ MAHD, MASP ], (err, results) => {
-		if (err) {
-			res.status(400).json({
-				error: 1,
-				message: err.message
-			});
-			return;
-		}
-
+	const { MAHD, MASP, SOLUONG } = req.body;
+	if (Number(SOLUONG) > 0) {
 		res.json({
-			message: 'Xóa dữ liệu thành công',
-			data: results,
-			status: 'success'
-		});
-	});
-
-	// db.query(setForeignCTHD_0, (err, results) => {
-	// 	db.query(deleteChiTietDonHang, [ MAHD, MASP ], (err, results) => {
-	// 		if (err) {
-	// 			res.status(400).json({
-	// 				error: 1,
-	// 				message: err.message
-	// 			});
-	// 			return;
-	// 		}
+			error: 1,
+			message: 'Sản phẩm còn không thế xóa'
+		})
+	} else {
+		db.query(deleteChiTietHoaDonNhap, [ MAHD, MASP ], (err, results) => {
+			if (err) {
+				res.status(400).json({
+					error: 2,
+					message: err.message
+				});
+				return;
+			} else {
+				res.json({
+					message: 'Xóa dữ liệu thành công',
+					data: results,
+					status: 'success'
+				});
+				return;
+			}
 	
-	// 		res.json({
-	// 			message: 'Xóa dữ liệu thành công',
-	// 			data: results,
-	// 			status: 'success'
-	// 		});
-	// 	});
-	// });
+		});
+	}
+
 });
 
-router.post('/chitiethoadonnhap',(req, res) => {
+router.post('/chitiethoadonnhapadd',(req, res) => {
 
 	const {
 		MAHD,
@@ -147,7 +141,6 @@ router.post('/chitiethoadonnhap',(req, res) => {
 			}
 		);
 		return;
-
 	} else {
 
 		if (Number(DONGIA) < 0 || Number(SOLUONG) < 0) {
