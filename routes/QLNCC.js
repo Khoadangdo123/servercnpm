@@ -32,7 +32,7 @@ router.post('/nhacungcap', (req, res) => {
 		TENNCC,
 		DIACHI
 	];
-	if (MACC === '' || TENNCC === '' || DIACHI === '') {
+	if (MANCC === '' || TENNCC === '' || DIACHI === '') {
 		res.json(
 			401,
 			{
@@ -42,7 +42,7 @@ router.post('/nhacungcap', (req, res) => {
 		)
 	} else {
 
-		db.query(insertDataDD, newData, (err, results, fields) => {
+		db.query(insertNCC, newData, (err, results, fields) => {
 			if (err) {
 				res.json(
 					400,
@@ -53,13 +53,11 @@ router.post('/nhacungcap', (req, res) => {
 				return;
 			}
 
-			db.query(setForeignDD_1, (err, results) => {
-				res.status(200).json({
-					message: 'Thêm dữ liệu thành công',
-					data: results,
-					status: 'success'
-				});
-			})
+			res.status(200).json({
+				message: 'Thêm dữ liệu thành công',
+				data: results,
+				status: 'success'
+			});
 		})
 	}
 });
@@ -106,7 +104,7 @@ router.patch('/nhacungcap', (req, res) => {
 			}
 		);
 	} else {
-		db.query(updateDD, [ MANCC, TENNCC, DIACHI ], (err, results) => {
+		db.query(updateNCC, [ TENNCC, DIACHI, MANCC ], (err, results) => {
 			if (err) {
 				res.status(400).json({
 					error: 2,

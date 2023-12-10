@@ -38,10 +38,10 @@ router.patch('/chitiethoadonnhap', (req, res) => {
 	} = req.body;
 
 	const updatedData = [
-		MASP,
 		DONGIA,
 		SOLUONG,
 		MAHD,
+		MASP,
 	];
 
 	if (MASP === '' || SOLUONG === '' || DONGIA === '') {

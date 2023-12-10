@@ -96,6 +96,7 @@ router.patch('/hoadonnhap', (req, res) => {
 		NGAYNHAP
 	} = req.body;
 
+
 	if (MAHD === '' || NVXUAT === '' || NGAYNHAP === '') {
 		res.json(
 			401,
@@ -106,7 +107,7 @@ router.patch('/hoadonnhap', (req, res) => {
 		);
 		return;
 	} else {
-		db.query(updateHDNhap, [ MAHD, NVXUAT, NGAYNHAP ], (err, results) => {
+		db.query(updateHDNhap, [ NVXUAT, NGAYNHAP, MAHD ], (err, results) => {
 			if (err) {
 				res.status(400).json({
 					error: 2,

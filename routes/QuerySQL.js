@@ -121,9 +121,9 @@ const soLuongDonHuy = "select * from HOADON where TRANGTHAI = 'Đã hủy';";
 const soLuongDonHang = "select * from HOADON where TRANGTHAI = 'Hoàn thành' or TRANGTHAI = 'Chờ thanh toán';"
 
 const tableChiTietHoaDonNhap = "Select * from CTDN where MAHD = ?;";
-const updateChiTietHoaDonNhap = "update CTDN set MASP = ?, DONGIA = ?, SOLUONG = ? where MAHD = ?;"
+const updateChiTietHoaDonNhap = "update CTDN set DONGIA = ?, SOLUONG = ? where MAHD = ? and MASP = ? ;"
 const insertChiTietHoaDonNhap = "insert into CTDN(MAHD,MASP,DONGIA,SOLUONG) values (?, ?, ?, ?);"
-const deleteChiTietHoaDonNhap = "delete from CTDN where MAHD = ? and MASP;"
+const deleteChiTietHoaDonNhap = "delete from CTDN where MAHD = ? and MASP = ?;"
 
 module.exports = {
 	// Đăng Nhập
