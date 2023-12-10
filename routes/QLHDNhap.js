@@ -15,24 +15,25 @@ router.get('/hoadonnhap', (req, res) => {
 		if (err) {
 			res.status(400).json('Error executing query:', err);
 			return;
+		} else {
+			res.status(200).json({
+				data: results
+			});
 		}
 
-		res.status(200).json({
-			data: results
-		});
 	})
 });
 
 router.post('/hoadonnhap', (req, res) => {
 
-	const { MAHD,NVXUAT,NGNHAP,TONG } = req.body;
+	const { MAHD,NVXUAT,NGAYNHAP } = req.body;
 	const newData = [
 		MAHD,
 		NVXUAT,
-		NGNHAP,
-		TONG,
+		NGAYNHAP
 	];
-	if (MAHD === '' || NVXUAT === '' || NGNHAP === '' || TONG === '') {
+
+	if (MAHD === '' || NVXUAT === '' || NGAYNHAP === '') {
 		res.json(
 			401,
 			{
@@ -40,9 +41,10 @@ router.post('/hoadonnhap', (req, res) => {
 				message: 'Bạn cần nhập đầy đủ thông tin'
 			}
 		)
+		return;
 	} else {
 
-		db.query(insertDataDD, newData, (err, results, fields) => {
+		db.query(insertHDNhap, newData, (err, results, fields) => {
 			if (err) {
 				res.json(
 					400,
@@ -51,15 +53,14 @@ router.post('/hoadonnhap', (req, res) => {
 					message: err.message
 				});
 				return;
-			}
-
-			db.query(setForeignDD_1, (err, results) => {
+			} else {
 				res.status(200).json({
 					message: 'Thêm dữ liệu thành công',
 					data: results,
 					status: 'success'
 				});
-			})
+				return;
+			}
 		});		
 	}
 });
@@ -76,13 +77,15 @@ router.delete('/hoadonnhap', (req, res) => {
 				}
 			);
 			return;
+		} else {
+			res.json({
+				message: 'Xóa dữ liệu thành công',
+				data: results,
+				status: 'delete success'
+			});
+			return;
 		}
 
-		res.json({
-			message: 'Xóa dữ liệu thành công',
-			data: results,
-			status: 'delete success'
-		});
 	});
 });
 
@@ -90,17 +93,10 @@ router.patch('/hoadonnhap', (req, res) => {
 	const {
 		MAHD,
 		NVXUAT,
-		NGNHAP,
-		TONG
+		NGAYNHAP
 	} = req.body;
 
-	const updatedData = [
-		NVXUAT,
-		NGNHAP,
-		TONG
-	]
-
-	if (MAHD === '' || NVXUAT === '' || NGNHAP === '' || TONG === '') {
+	if (MAHD === '' || NVXUAT === '' || NGAYNHAP === '') {
 		res.json(
 			401,
 			{
@@ -108,21 +104,24 @@ router.patch('/hoadonnhap', (req, res) => {
 				message: 'Mời bạn nhập đầy đủ'
 			}
 		);
+		return;
 	} else {
-		db.query(updateDD, [ NVXUAT, NGNHAP, TONG ], (err, results) => {
+		db.query(updateHDNhap, [ MAHD, NVXUAT, NGAYNHAP ], (err, results) => {
 			if (err) {
 				res.status(400).json({
 					error: 2,
 					message: err.message
 				});
 				return;
+			} else {
+				res.json({
+					message: 'Cập nhật dữ liệu thành công',
+					data: results,
+					status: 'success'
+				});
+				return;
 			}
 	
-			res.json({
-				message: 'Cập nhật dữ liệu thành công',
-				data: results,
-				status: 'success'
-			});
 		});
 
 	}
