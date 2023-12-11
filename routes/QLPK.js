@@ -100,10 +100,10 @@ router.post('/phieukiem', (req, res) => {
 });
 
 router.delete('/phieukiem', (req, res) => {
-	const { MAPK } = req.body;
+	const { MAPK, SLGIAO } = req.body;
 
 
-	if (Number(SLGIAO) >= 0) {
+	if (Number(SLGIAO) > 0) {
 		res.json({
 			error: 2,
 			message: 'Số lượng tồn lớn hơn 0, Xóa không thành công'
@@ -160,7 +160,7 @@ router.patch('/phieukiem', (req, res) => {
 			message: 'Cần bạn nhập đủ thông tin'
 		})
 	} else {
-		if (Number(SLGIAO) <= 0 || Number(DONGIA) <= 0) {
+		if (Number(SLGIAO) < 0 || Number(DONGIA) < 0) {
 			res.json({
 				error: 2,
 				message: 'Cần bạn nhập thông tin là số nguyên dương'
