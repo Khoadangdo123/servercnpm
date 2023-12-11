@@ -47,11 +47,25 @@ router.post('/hoadon', (req, res) => {
 		
 		db.query(insertHD, newData, (err, results) => {
 			if (err) {
-				res.status(400).json({
-					message: err.message,
-					error: 2
-				});
-				return;
+				if (err.message === 'Cannot add or update a child row: a foreign key constraint fails (`qlchthucannhanh`.`hoadon`, CONSTRAINT `FK_HD_KH` FOREIGN KEY (`MAKH`) REFERENCES `khachhang` (`MAKH`) ON DELETE SET NULL)') {
+					res.status(400).json({
+						error: 2,
+						message: 'Không tìm thấy khách hàng',
+					});
+					return;
+				} 
+				else if (err.message === 'Cannot add or update a child row: a foreign key constraint fails (`qlchthucannhanh`.`hoadon`, CONSTRAINT `FK_HD_NV` FOREIGN KEY (`NVXUAT`) REFERENCES `nhanvien` (`MANV`) ON DELETE SET NULL)') {
+					res.status(400).json({
+						error: 4,
+						message: 'Không tìm thấy nhân viên'
+					})
+				}
+				else {
+					res.status(400).json({
+						error: 3,
+						message: err.message
+					})
+				}
 			} else {
 				res.status(200).json({
 					message: 'Thêm data cơ sở dữ liệu',
@@ -87,18 +101,20 @@ router.post('/hoadon', (req, res) => {
 router.delete('/hoadon', (req, res) => {
 	const { MAHD } = req.body;
 
-	db.query(setForeignHD_0, (err, results) => {
-		db.query(deleteHD, [ MAHD ], (err, results) => {
-			if (err) {
-				res.status(400).json(err.message);
-				return;
-			}
 	
-			res.json({
-				message: 'Xóa dữ liệu thành công',
-				data: results,
-				status: 'success'
+	db.query(deleteHD, [ MAHD ], (err, results) => {
+		if (err) {
+			res.status(400).json({
+				error: 1,
+				message: err.message
 			});
+			return;
+		}
+
+		res.json({
+			message: 'Xóa dữ liệu thành công',
+			data: results,
+			status: 'success'
 		});
 	});
 });
