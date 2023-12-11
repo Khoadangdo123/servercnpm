@@ -58,11 +58,18 @@ router.post('/sanpham', (req, res) => {
 			} else {
 
 				if (err) {
-					res.status(400).json({
-						error: 'error',
-						message: err.message
-					});
-					return;
+					if (err.message === 'Cannot add or update a child row: a foreign key constraint fails (`qlchthucannhanh`.`sanpham`, CONSTRAINT `FK_SP_NCC` FOREIGN KEY (`MANCC`) REFERENCES `nhacungcap` (`MANCC`) ON DELETE SET NULL)') {
+						res.status(400).json({
+							error: 4,
+							message: 'Nhà cung cấp của bạn không tìm thấy nhà cung cấp'
+						});
+						return;
+					} else {
+						res.status(400).json({
+							error: 'error',
+							message: err.message
+						})
+					}
 				} else {
 					res.status(200).json({
 						message: 'Thêm data cơ sở dữ liệu',
